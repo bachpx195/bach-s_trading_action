@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: trading_dashboard
+Version: 0.0.1
+Summary: A small example package
+Requires-Python: >=3.7
+Requires-Dist: pymysql
+Requires-Dist: scipy
+Requires-Dist: streamlit>=1.0
+Requires-Dist: compress_pickle
+Requires-Dist: hydralit_components>=1.0.7
+Requires-Dist: validators
+Requires-Dist: bokeh
+Requires-Dist: plotly
