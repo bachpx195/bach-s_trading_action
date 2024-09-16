@@ -1,4 +1,5 @@
 import streamlit as st
+import plotly.graph_objects as go
 from apps.helpers.datetime_helper import date_with_name
 from apps.components.chart_daily_component import ChartDailyComponent
 from apps.components.chart_hour_component import ChartHourComponent
@@ -25,10 +26,13 @@ class ChartOverviewComponent:
     st.write(self.chart_title())
     c1, c2 = st.columns([1, 3])
 
+    main_chart_hour_object = ChartHourComponent(
+        self.hour_prices, self.day_prices, self.date)
+
     with c1:
       ChartDailyComponent(self.week_prices, self.day_prices, self.date).run()
     with c2:
-      ChartHourComponent(self.hour_prices, self.day_prices, self.date).run()
+      main_chart_hour_object.run()
 
     with c1:
       ChartDailyComponent(
@@ -44,6 +48,8 @@ class ChartOverviewComponent:
                           self.abtc_day_prices, self.date).run()
 
     st.write('_________________________________________________')
+
+    main_chart_hour_object.show_detail_chart()
 
   def chart_title(self):
     return f"{date_with_name(self.date)}"

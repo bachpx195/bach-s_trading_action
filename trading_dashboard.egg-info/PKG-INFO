@@ -11,3 +11,5 @@ Requires-Dist: hydralit_components>=1.0.7
 Requires-Dist: validators
 Requires-Dist: bokeh
 Requires-Dist: plotly
+Requires-Dist: numpy
+Requires-Dist: matplotlib
