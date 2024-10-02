@@ -50,7 +50,8 @@ def load_day_data(merchandise_rate, record_limit, start_date, end_date, list_day
 
   prices = candlestick.to_df()
   first_date = prices.iloc[-1].name
-  end_date = prices.iloc[0].name
+  end_date = prices.iloc[0].name.replace(tzinfo=None)
+
   start_date = get_start_of_week(first_date)
   candlestick = Candlestick(merchandise_rate, 'day', limit=record_limit,
                             sort="DESC", start_date=start_date, end_date=end_date, list_day=list_day)
