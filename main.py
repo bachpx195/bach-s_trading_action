@@ -7,17 +7,6 @@ from apps.helpers.datetime_helper import to_date, next_day, previous_day, to_str
 MENU_LAYOUT = [1, 1, 1, 7, 2]
 CONFIG = {'displayModeBar': False, 'responsive': False}
 
-# Them *** voi cac ngay phu hop
-# LIST_DATE = (
-#     "2024-08-08",
-#     "2023-10-12",
-#     "2023-09-13",
-#     "2023-08-10",
-#     "2024-07-11",
-#     "2024-06-12",
-#     "2024-05-15",
-# )
-
 def run():
   st.set_page_config(layout="wide")
   st.write(
@@ -25,9 +14,17 @@ def run():
   st.write(
       '<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
   
-#   date_select = st.radio(
-#       "Chọn ngày: ", LIST_DATE)
-#   date_select = date_select.replace("*", "")
+
+  # Them *** voi cac ngay phu hop
+  # LIST_DATE = (
+  #   "2023-09-29",
+  #   "2022-09-10",
+  #   "2021-09-21",
+  #   "2020-10-01",
+  # )
+  # date_select = st.radio(
+  #   "Chọn ngày: ", LIST_DATE)
+  # date_select = date_select.replace("*", "")
   
 
   date_select = st.date_input(label='Chọn ngày')
