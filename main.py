@@ -6,6 +6,7 @@ from apps.helpers.datetime_helper import to_date, next_day, previous_day, to_str
 
 MENU_LAYOUT = [1, 1, 1, 7, 2]
 CONFIG = {'displayModeBar': False, 'responsive': False}
+MERCHANDISE = "LINK"
 
 def run():
   st.set_page_config(layout="wide")
@@ -16,15 +17,16 @@ def run():
   
 
   # Them *** voi cac ngay phu hop
-  # LIST_DATE = (
-  #   "2023-09-29",
-  #   "2022-09-10",
-  #   "2021-09-21",
-  #   "2020-10-01",
-  # )
-  # date_select = st.radio(
-  #   "Chọn ngày: ", LIST_DATE)
-  # date_select = date_select.replace("*", "")
+
+  LIST_DATE = (
+    "***2024-04-22***",
+    "***2023-10-16***",
+    "2023-11-05",
+    "2023-11-09",
+  )
+#   date_select = st.radio(
+#     "Chọn ngày: ", LIST_DATE)
+#   date_select = date_select.replace("*", "")
   
 
   date_select = st.date_input(label='Chọn ngày')
@@ -34,11 +36,11 @@ def run():
   END_DATE = next_day(to_str(date_select))
 
   week_prices, day_prices, hour_prices = GetDataService(
-      'LTCUSDT',100, START_DATE, END_DATE, None).run()
+      f"{MERCHANDISE}USDT", 100, START_DATE, END_DATE, None).run()
   btc_week_prices, btc_day_prices, btc_hour_prices = GetDataService(
       'BTCUSDT', 100, START_DATE, END_DATE, None).run()
   abtc_week_prices, abtc_day_prices, abtc_hour_prices = GetDataService(
-      'LTCBTC', 100, START_DATE, END_DATE, None).run()
+      f"{MERCHANDISE}BTC", 100, START_DATE, END_DATE, None).run()
 
   for date in day_prices.day.to_list():
     if date == to_str(date_select):
