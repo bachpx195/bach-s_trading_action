@@ -3,10 +3,11 @@ from apps.services.get_data_service import GetDataService
 from apps.components.chart_overview_component import ChartOverviewComponent
 from apps.helpers.datetime_helper import to_date, next_day, previous_day, to_str
 
-
 MENU_LAYOUT = [1, 1, 1, 7, 2]
 CONFIG = {'displayModeBar': False, 'responsive': False}
 MERCHANDISE = "LINK"
+OTHER_MERCHANDISES = ["LTC", "DOT"]
+SHOW_OTHER_MERCHANDISES = True
 
 def run():
   st.set_page_config(layout="wide")
@@ -37,15 +38,27 @@ def run():
 
   try:
     week_prices, day_prices, hour_prices = GetDataService(
-        f"{MERCHANDISE}USDT", 100, START_DATE, END_DATE, None).run()
+      f"{MERCHANDISE}USDT", 100, START_DATE, END_DATE, None).run()
     btc_week_prices, btc_day_prices, btc_hour_prices = GetDataService(
-        'BTCUSDT', 100, START_DATE, END_DATE, None).run()
+      'BTCUSDT', 100, START_DATE, END_DATE, None).run()
     abtc_week_prices, abtc_day_prices, abtc_hour_prices = GetDataService(
-        f"{MERCHANDISE}BTC", 100, START_DATE, END_DATE, None).run()
-    
+      f"{MERCHANDISE}BTC", 100, START_DATE, END_DATE, None).run()
+    other_price_data = None
+    if SHOW_OTHER_MERCHANDISES:
+      other_price_data = {}
+      for om in OTHER_MERCHANDISES:
+        week_prices, day_prices, hour_prices = GetDataService(
+            f"{om}USDT", 100, START_DATE, END_DATE, None).run()
+        other_price_data[om] = {
+            'week_prices': week_prices,
+            'day_prices': day_prices,
+            'hour_prices': hour_prices
+        }
+
     for date in day_prices.day.to_list():
       if date == to_str(date_select):
         ChartOverviewComponent(
+          MERCHANDISE,
           week_prices,
           day_prices,
           hour_prices,
@@ -57,6 +70,8 @@ def run():
           abtc_week_prices,
           abtc_day_prices,
           abtc_hour_prices,
+          SHOW_OTHER_MERCHANDISES,
+          other_price_data
         ).run()
   except IndexError:
     st.write(
