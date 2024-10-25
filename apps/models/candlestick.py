@@ -2,6 +2,7 @@ import pandas as pd
 import pytz
 from datetime import timezone
 from configs.database.pymysql_conn import DataBase
+from apps.services.log_services import log
 
 db = DataBase()
 INTERVAL_HASH = {"day": 1, "week": 2, "month": 3, "hour": 4, "15m": 5}
@@ -58,9 +59,7 @@ class Candlestick:
                 sql_query = sql_query + f"lIMIT {self.limit}"
             sql_query = sql_query + ';'
 
-            print(
-                "_________________________________________log query_________________________________________")
-            print(sql_query)
+            log(sql_query)
 
             db.cur.execute(sql_query)
             if self.join_analytic_table:
@@ -90,11 +89,8 @@ class Candlestick:
                 my_timezone = pytz.timezone('Asia/Bangkok')
                 df['date'] = df['date'].dt.tz_convert(my_timezone)
             else:
-                print("**************data frame is null**************")
+                log("**************data frame is null**************")
             df.set_index('date', inplace=True)
             return df
         except:
-            if(df['date'].empty):
-                print("data frame is null")
-            else:
-                print("Candlestick exception")
+            log("Candlestick exception")

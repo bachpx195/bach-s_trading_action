@@ -35,16 +35,17 @@ def run():
   START_DATE = previous_day(to_str(date_select))
   END_DATE = next_day(to_str(date_select))
 
-  week_prices, day_prices, hour_prices = GetDataService(
-      f"{MERCHANDISE}USDT", 100, START_DATE, END_DATE, None).run()
-  btc_week_prices, btc_day_prices, btc_hour_prices = GetDataService(
-      'BTCUSDT', 100, START_DATE, END_DATE, None).run()
-  abtc_week_prices, abtc_day_prices, abtc_hour_prices = GetDataService(
-      f"{MERCHANDISE}BTC", 100, START_DATE, END_DATE, None).run()
-
-  for date in day_prices.day.to_list():
-    if date == to_str(date_select):
-      ChartOverviewComponent(
+  try:
+    week_prices, day_prices, hour_prices = GetDataService(
+        f"{MERCHANDISE}USDT", 100, START_DATE, END_DATE, None).run()
+    btc_week_prices, btc_day_prices, btc_hour_prices = GetDataService(
+        'BTCUSDT', 100, START_DATE, END_DATE, None).run()
+    abtc_week_prices, abtc_day_prices, abtc_hour_prices = GetDataService(
+        f"{MERCHANDISE}BTC", 100, START_DATE, END_DATE, None).run()
+    
+    for date in day_prices.day.to_list():
+      if date == to_str(date_select):
+        ChartOverviewComponent(
           week_prices,
           day_prices,
           hour_prices,
@@ -56,7 +57,11 @@ def run():
           abtc_week_prices,
           abtc_day_prices,
           abtc_hour_prices,
-      ).run()
+        ).run()
+  except IndexError:
+    st.write(
+      f"Ngay {date_select} chua co data.")
+    
 
 if __name__ == "__main__":
     run()
