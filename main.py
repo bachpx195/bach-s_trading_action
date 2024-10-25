@@ -18,16 +18,26 @@ def run():
   
 
   # Them *** voi cac ngay phu hop
-
-  LIST_DATE = (
-    "***2024-04-22***",
-    "***2023-10-16***",
-    "2023-11-05",
-    "2023-11-09",
-  )
-#   date_select = st.radio(
-#     "Chọn ngày: ", LIST_DATE)
-#   date_select = date_select.replace("*", "")
+  # LIST_DATE = (
+  #   "2024-10-23",
+  #   "***2024-10-22***",
+  #   "2024-10-21",
+  #   "***2024-10-20***",
+  #   "2024-10-19",
+  #   "***2024-10-18***",
+  #   "2024-10-17",
+  #   "2024-10-16",
+  #   "***2024-10-15***",
+  #   "***2024-10-14***",
+  #   "2024-10-13",
+  #   "***2024-10-12***",
+  #   "***2024-10-11***",
+  #   "***2024-10-10***",
+  #   "2024-10-09"
+  # )
+  # date_select = st.radio(
+  #   "Chọn ngày: ", LIST_DATE)
+  # date_select = date_select.replace("*", "")
   
 
   date_select = st.date_input(label='Chọn ngày')
@@ -47,12 +57,12 @@ def run():
     if SHOW_OTHER_MERCHANDISES:
       other_price_data = {}
       for om in OTHER_MERCHANDISES:
-        week_prices, day_prices, hour_prices = GetDataService(
+        om_week_prices, om_day_prices, om_hour_prices = GetDataService(
             f"{om}USDT", 100, START_DATE, END_DATE, None).run()
         other_price_data[om] = {
-            'week_prices': week_prices,
-            'day_prices': day_prices,
-            'hour_prices': hour_prices
+            'week_prices': om_week_prices,
+            'day_prices': om_day_prices,
+            'hour_prices': om_hour_prices
         }
 
     for date in day_prices.day.to_list():
